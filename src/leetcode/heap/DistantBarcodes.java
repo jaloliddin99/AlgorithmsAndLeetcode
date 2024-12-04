@@ -1,9 +1,7 @@
 package leetcode.heap;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class DistantBarcodes {
 
@@ -22,10 +20,6 @@ public class DistantBarcodes {
     public static void calculate(Integer a, Integer b){
         System.out.println("result " + (a + b));
     }
-
-
-
-
     public int[] rearrangeBarcodes(int[] barcodes) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < barcodes.length; i++) {
@@ -35,25 +29,43 @@ public class DistantBarcodes {
                 (a, b) -> b.occurrence - a.occurrence
         );
 
+        map.forEach((number, occurrence) -> {
+            priorityQueue.add(new Holder(number, occurrence));
+        });
 
-        return new int[]{};
+
+        int[] arr = new int[barcodes.length];
+        int index = 0;
+        while (!priorityQueue.isEmpty()){
+            Holder max = priorityQueue.poll();
+            Holder secondMax = priorityQueue.poll();
+            if (max != null){
+                arr[index++] =  max.number;
+                max.occurrence--;
+            }
+            if (secondMax != null){
+                arr[index++] =  secondMax.number;
+                secondMax.occurrence--;
+            }
+            if (max != null && max.occurrence > 0){
+                priorityQueue.add(max);
+            }
+
+            if (secondMax != null && secondMax.occurrence > 0){
+                priorityQueue.add(secondMax);
+            }
+        }
+
+        return arr;
     }
+
     public static class Holder{
-        int occurrence;
         int number;
+        int occurrence;
 
-        public Holder(int occurance, int number) {
-            this.occurrence = occurance;
+        public Holder(int number, int occurrence) {
             this.number = number;
-        }
-
-        @Override
-        public String toString() {
-            return "Holder{" +
-                    "occurrence=" + occurrence +
-                    ", number=" + number +
-                    '}';
+            this.occurrence = occurrence;
         }
     }
-
 }
