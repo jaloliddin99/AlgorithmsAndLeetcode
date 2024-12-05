@@ -28,7 +28,6 @@ public class DiagonalTraverse {
         for (Map.Entry<Integer, ArrayList<Integer>> entry : hashMap.entrySet()) {
             List<Integer> diagonal = entry.getValue();
 
-            // Reverse the diagonal to get the correct order
             Collections.reverse(diagonal);
             for (int num : diagonal) {
                 arr[index++] = num;

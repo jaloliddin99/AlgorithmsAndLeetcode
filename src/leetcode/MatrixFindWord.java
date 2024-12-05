@@ -5,7 +5,7 @@ import java.util.*;
 public class MatrixFindWord {
 
     public static void main(String[] args) {
-        int rows = 5; // Number of rows
+        int rows = 5;
         int cols = 5; // Number of columns
         char[][] charArray = new char[rows][cols];
 
