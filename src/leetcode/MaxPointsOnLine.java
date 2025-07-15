@@ -7,59 +7,35 @@ public class MaxPointsOnLine {
     }
 
     public int maxPoints(int[][] points) {
+        return pointsFinder(points, 0, 2);
+    }
 
-        int x1 = points[0][0];
-        int y1 = points[0][1];
+    public int pointsFinder(int[][] points, int index, int max){
+        int x0 = points[index][0];
+        int y0 = points[index][1];
+        int x1 = points[index+1][0];
+        int y1 = points[index+1][1];
 
-        int x2 = points[1][0];
-        int y2 = points[1][1];
+        int dx = x1 - x0;
+        int dy = y1 - y0;
 
+        for (int i = index+2; i < points.length; i++) {
+            int x2 = points[i][0];
+            int y2 = points[i][1];
 
-        float angle;
-
-        if (x2-x1 == 0){
-            angle = -1;
-        }else {
-            angle = ((float) Math.abs(y2 - y1)) / Math.abs(x2-x1);
-        }
-        int i = 0;
-
-        int initialHolder = i;
-        int max = 0;
-
-        while (i < points.length){
-            x1 = points[initialHolder][0];
-            y1 = points[initialHolder][1];
-
-            x2 = points[i+1][0];
-            y2 = points[i+1][1];
-
-            if (angle != angle){
-                initialHolder = i;
-                int gcd = findGCD(Math.abs(x1-x2), Math.abs(y1-y2));
-                max = Math.max(gcd, max);
-            }
-            if (x2-x1 == 0){
-                angle = -1;
+            if ((y2 - y1) * dx != (x2 - x1) * dy) {
+                pointsFinder(points, i, max);
             }else {
-                angle = ((float) Math.abs(y2 - y1)) / Math.abs(x2-x1);
+                max++;
             }
-            i++;
         }
-
         return max;
     }
 
-    public static int findGCD(int a, int b) {
-        while (b != 0) {
-            int temp = b;
-            b = a % b;
-            a = temp;
-        }
-        return a;
+    private int gcd(int a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
     }
-
-
 
 
 }

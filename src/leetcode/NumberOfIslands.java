@@ -1,8 +1,6 @@
 package leetcode;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class NumberOfIslands {
 
@@ -29,6 +27,8 @@ public class NumberOfIslands {
 
 
     public static void dfs(char[][] board, int i, int j){
+
+        ArrayList<Integer> adw = new ArrayList<>();
 
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != '1'){
             return;
